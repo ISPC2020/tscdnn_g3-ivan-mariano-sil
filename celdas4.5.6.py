@@ -28,8 +28,8 @@ class Metodos:
          return Z, cache
 
 
-        def linear_activation_forward(A_prev, W, b, activation_fn):
-          """
+    def linear_activation_forward(A_prev, W, b, activation_fn):
+        """
          Computes post-activation output using non-linear activation function.
 
         Arguments
@@ -49,90 +49,90 @@ class Metodos:
         output of the activation function.
         cache : tuple
         stores linear_cache and activation_cache. ((A_prev, W, b), Z) to be used in backpropagation.
-         """
-    assert activation_fn == "sigmoid" or activation_fn == "tanh" or \
-        activation_fn == "relu"
+        """
+        assert activation_fn == "sigmoid" or activation_fn == "tanh" or \
+            activation_fn == "relu"
 
-    if activation_fn == "sigmoid":
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = sigmoid(Z)
+        if activation_fn == "sigmoid":
+            Z, linear_cache = linear_forward(A_prev, W, b)
+            A, activation_cache = sigmoid(Z)
 
-    elif activation_fn == "tanh":
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = tanh(Z)
+        elif activation_fn == "tanh":
+            Z, linear_cache = linear_forward(A_prev, W, b)
+            A, activation_cache = tanh(Z)
 
-    elif activation_fn == "relu":
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = relu(Z)
+        elif activation_fn == "relu":
+            Z, linear_cache = linear_forward(A_prev, W, b)
+            A, activation_cache = relu(Z)
 
-    assert A.shape == (W.shape[0], A_prev.shape[1])
+        assert A.shape == (W.shape[0], A_prev.shape[1])
 
-    cache = (linear_cache, activation_cache)
+        cache = (linear_cache, activation_cache)
 
-    return A, cache
+        return A, cache
 
 
-def L_model_forward(X, parameters, hidden_layers_activation_fn="relu"):
-    """
-    Computes the output layer through looping over all units in topological
-    order.
+    def L_model_forward(X, parameters, hidden_layers_activation_fn="relu"):
+        """
+        Computes the output layer through looping over all units in topological
+        order.
 
-    Arguments
-    ---------
-    X : 2d-array
+        Arguments
+        ---------
+        X : 2d-array
         input matrix of shape input_size x training_examples.
-    parameters : dict
+        parameters : dict
         contains all the weight matrices and bias vectors for all layers.
-    hidden_layers_activation_fn : str
+        hidden_layers_activation_fn : str
         activation function to be used on hidden layers: "tanh", "relu".
 
-    Returns
-    -------
-    AL : 2d-array
+        Returns
+        -------
+        AL : 2d-array
         probability vector of shape 1 x training_examples.
-    caches : list
+        caches : list
         that contains L tuples where each layer has: A_prev, W, b, Z.
-    """
-    A = X                           
-    caches = []                     
-    L = len(parameters) // 2        
+        """
+        A = X                           
+        caches = []                     
+        L = len(parameters) // 2        
 
-    for l in range(1, L):
-        A_prev = A
-        A, cache = linear_activation_forward(
-            A_prev, parameters["W" + str(l)], parameters["b" + str(l)],
-            activation_fn=hidden_layers_activation_fn)
+        for l in range(1, L):
+            A_prev = A
+            A, cache = linear_activation_forward(
+                A_prev, parameters["W" + str(l)], parameters["b" + str(l)],
+                activation_fn=hidden_layers_activation_fn)
+            caches.append(cache)
+
+        AL, cache = linear_activation_forward(
+            A, parameters["W" + str(L)], parameters["b" + str(L)],
+            activation_fn="sigmoid")
         caches.append(cache)
-
-    AL, cache = linear_activation_forward(
-        A, parameters["W" + str(L)], parameters["b" + str(L)],
-        activation_fn="sigmoid")
-    caches.append(cache)
-
-    assert AL.shape == (1, X.shape[1])
-
-    return AL, caches
+        
+        assert AL.shape == (1, X.shape[1])
+    
+        return AL, caches
 
     #celda 6
     # Compute cross-entropy cost
-def compute_cost(AL, y):
-    """
-    Computes the binary Cross-Entropy cost.
+    def compute_cost(AL, y):
+        """
+        Computes the binary Cross-Entropy cost.
 
-    Arguments
-    ---------
-    AL : 2d-array
-        probability vector of shape 1 x training_examples.
-    y : 2d-array
+        Arguments
+        ---------
+        AL : 2d-array
+            probability vector of shape 1 x training_examples.
+        y : 2d-array
         true "label" vector.
 
-    Returns
-    -------
-    cost : float
-        binary cross-entropy cost.
-    """
-    m = y.shape[1]              
-    cost = - (1 / m) * np.sum(
-        np.multiply(y, np.log(AL)) + np.multiply(1 - y, np.log(1 - AL)))
+        Returns
+        -------
+        cost : float
+            binary cross-entropy cost.
+        """
+        m = y.shape[1]              
+        cost = - (1 / m) * np.sum(
+            np.multiply(y, np.log(AL)) + np.multiply(1 - y, np.log(1 - AL)))
 
-    return cost
+        return cost
