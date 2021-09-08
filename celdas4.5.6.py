@@ -41,54 +41,56 @@ plt.tight_layout();
 
 #Celda5
 # Define helper functions that will be used in L-model forward prop
-def linear_forward(A_prev, W, b):
-    """
-    Computes affine transformation of the input.
 
-    Arguments
-    ---------
-    A_prev : 2d-array
-        activations output from previous layer.
-    W : 2d-array
+class Metodos:
+    def linear_forward(A_prev, W, b):
+         """
+        Computes affine transformation of the input.
+
+        Arguments
+         ---------
+         A_prev : 2d-array
+            activations output from previous layer.
+         W : 2d-array
+            weight matrix, shape: size of current layer x size of previuos layer.
+        b : 2d-array
+            bias vector, shape: size of current layer x 1.
+
+         Returns
+        -------
+         Z : 2d-array
+          affine transformation output.
+         cache : tuple
+          stores A_prev, W, b to be used in backpropagation.
+          """
+         Z = np.dot(W, A_prev) + b
+         cache = (A_prev, W, b)
+
+         return Z, cache
+
+
+        def linear_activation_forward(A_prev, W, b, activation_fn):
+          """
+         Computes post-activation output using non-linear activation function.
+
+        Arguments
+         ---------
+        A_prev : 2d-array
+            activations output from previous layer.
+          W : 2d-array
         weight matrix, shape: size of current layer x size of previuos layer.
-    b : 2d-array
+         b : 2d-array
         bias vector, shape: size of current layer x 1.
-
-    Returns
-    -------
-    Z : 2d-array
-        affine transformation output.
-    cache : tuple
-        stores A_prev, W, b to be used in backpropagation.
-    """
-    Z = np.dot(W, A_prev) + b
-    cache = (A_prev, W, b)
-
-    return Z, cache
-
-
-def linear_activation_forward(A_prev, W, b, activation_fn):
-    """
-    Computes post-activation output using non-linear activation function.
-
-    Arguments
-    ---------
-    A_prev : 2d-array
-        activations output from previous layer.
-    W : 2d-array
-        weight matrix, shape: size of current layer x size of previuos layer.
-    b : 2d-array
-        bias vector, shape: size of current layer x 1.
-    activation_fn : str
+         activation_fn : str
         non-linear activation function to be used: "sigmoid", "tanh", "relu".
 
-    Returns
-    -------
-    A : 2d-array
+        Returns
+        -------
+         A : 2d-array
         output of the activation function.
-    cache : tuple
+        cache : tuple
         stores linear_cache and activation_cache. ((A_prev, W, b), Z) to be used in backpropagation.
-    """
+         """
     assert activation_fn == "sigmoid" or activation_fn == "tanh" or \
         activation_fn == "relu"
 
