@@ -49,7 +49,7 @@ parameters_tanh = L_layer_model(
     X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
     hidden_layers_activation_fn="tanh")
 
-# Print the accuracy
+    # Print the accuracy
 accuracy(X_test, parameters_tanh, y_test, activation_fn="tanh")
 
 def print_hi(name):
