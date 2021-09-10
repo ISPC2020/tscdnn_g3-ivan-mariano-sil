@@ -7,6 +7,11 @@ import seaborn as sns
 #harta
 #This is a sample Python script.
 
+import celdas5y6 as c4y5
+
+
+
+
 # Press Mayús+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 # Import training dataset
