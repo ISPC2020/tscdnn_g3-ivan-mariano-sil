@@ -4,7 +4,10 @@ import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-#harta
+import celdas7y9 as c79
+import celdas as c456
+
+
 #This is a sample Python script.
 
 # Press Mayús+F10 to execute it or replace it with your code.
