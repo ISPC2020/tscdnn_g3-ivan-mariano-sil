@@ -5,15 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import celdas7y9 as c79
-import celdas as c456
-
-
-#This is a sample Python script.
-
 import celdas5y6 as c4y5
 
-
-
+#This is a sample Python script.
 
 # Press Mayús+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
