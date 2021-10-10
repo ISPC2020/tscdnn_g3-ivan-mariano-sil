@@ -4,6 +4,7 @@ import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+import Celdas_1,2&3 as c123
 import celdas7y9 as c79
 import celdas5y6 as c4y5
 
@@ -47,7 +48,7 @@ Test: {X_test.shape}, {y_test.shape}""")
 layers_dims = [X_train.shape[0], 5, 5, 1]
 
 # NN with tanh activation fn
-parameters_tanh = L_layer_model(
+parameters_tanh = c79.L_layer_model(
     X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
     hidden_layers_activation_fn="tanh")
 
