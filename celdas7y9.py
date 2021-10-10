@@ -60,10 +60,10 @@ class Celdas79:
         dZ : 2d-array
             gradient of the cost with respect to Z.
        """
-       A, Z = relu(Z)
-       dZ = np.multiply(dA, np.int64(A > 0))
+        A, Z = relu(Z)
+        dZ = np.multiply(dA, np.int64(A > 0))
  
-       return dZ
+        return dZ
 
 
     # define helper functions that will be used in L-model back-prop
@@ -91,15 +91,15 @@ class Celdas79:
        A_prev, W, b = cache
        m = A_prev.shape[1]
 
-        dW = (1 / m) * np.dot(dZ, A_prev.T)
-        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
-        dA_prev = np.dot(W.T, dZ)
+       dW = (1 / m) * np.dot(dZ, A_prev.T)
+       db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
+       dA_prev = np.dot(W.T, dZ)
 
-        assert dA_prev.shape == A_prev.shape
-        assert dW.shape == W.shape
-        assert db.shape == b.shape
+       assert dA_prev.shape == A_prev.shape
+       assert dW.shape == W.shape
+       assert db.shape == b.shape
 
-        return dA_prev, dW, db
+       return dA_prev, dW, db
 
 
     def linear_activation_backward(dA, cache, activation_fn):
@@ -139,7 +139,7 @@ class Celdas79:
         return dA_prev, dW, db
 
 
-        def L_model_backward(AL, y, caches, hidden_layers_activation_fn="relu"):
+    def L_model_backward(AL, y, caches, hidden_layers_activation_fn="relu"):
             """
         Computes the gradient of output layer w.r.t weights, biases, etc. starting
         on the output layer in reverse topological order.
@@ -160,24 +160,24 @@ class Celdas79:
         grads : dict
             with the gradients.
         """
-        y = y.reshape(AL.shape)
-        L = len(caches)
-        grads = {}
+            y = y.reshape(AL.shape)
+            L = len(caches)
+            grads = {}
 
-        dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
+            dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
 
-        grads["dA" + str(L - 1)], grads["dW" + str(L)], grads[
-            "db" + str(L)] = linear_activation_backward(
-                dAL, caches[L - 1], "sigmoid")
+            grads["dA" + str(L - 1)], grads["dW" + str(L)], grads[
+                "db" + str(L)] = linear_activation_backward(
+                    dAL, caches[L - 1], "sigmoid")
 
-        for l in range(L - 1, 0, -1):
-            current_cache = caches[l - 1]
-            grads["dA" + str(l - 1)], grads["dW" + str(l)], grads[
-                "db" + str(l)] = linear_activation_backward(
-                    grads["dA" + str(l)], current_cache,
-                    hidden_layers_activation_fn)
+            for l in range(L - 1, 0, -1):
+                current_cache = caches[l - 1]
+                grads["dA" + str(l - 1)], grads["dW" + str(l)], grads[
+                    "db" + str(l)] = linear_activation_backward(
+                        grads["dA" + str(l)], current_cache,
+                        hidden_layers_activation_fn)
 
-        return grads
+            return grads
 
 
     # define the function to update both weight matrices and bias vectors
@@ -212,93 +212,93 @@ class Celdas79:
         print_cost=True, hidden_layers_activation_fn="relu"):
     
         """
-    Implements multilayer neural network using gradient descent as the
-    learning algorithm.
+        Implements multilayer neural network using gradient descent as the
+        learning algorithm.
 
-    Arguments
-    ---------
-    X : 2d-array
-        data, shape: number of examples x num_px * num_px * 3.
-    y : 2d-array
-        true "label" vector, shape: 1 x number of examples.
-    layers_dims : list
-        input size and size of each layer, length: number of layers + 1.
-    learning_rate : float
-        learning rate of the gradient descent update rule.
-    num_iterations : int
-        number of iterations of the optimization loop.
-    print_cost : bool
-        if True, it prints the cost every 100 steps.
-    hidden_layers_activation_fn : str
-        activation function to be used on hidden layers: "tanh", "relu".
+        Arguments
+        ---------
+        X : 2d-array
+            data, shape: number of examples x num_px * num_px * 3.
+        y : 2d-array
+            true "label" vector, shape: 1 x number of examples.
+        layers_dims : list
+            input size and size of each layer, length: number of layers + 1.
+        learning_rate : float
+            learning rate of the gradient descent update rule.
+        num_iterations : int
+            number of iterations of the optimization loop.
+        print_cost : bool
+            if True, it prints the cost every 100 steps.
+        hidden_layers_activation_fn : str
+            activation function to be used on hidden layers: "tanh", "relu".
 
-    Returns
-    -------
-    parameters : dict
-        parameters learnt by the model. They can then be used to predict test examples.
-    """
-    np.random.seed(1)
+        Returns
+        -------
+        parameters : dict
+            parameters learnt by the model. They can then be used to predict test examples.
+        """
+        np.random.seed(1)
 
-    # initialize parameters
-    parameters = initialize_parameters(layers_dims)
+        # initialize parameters
+        parameters = initialize_parameters(layers_dims)
 
-    # intialize cost list
-    cost_list = []
+        # intialize cost list
+        cost_list = []
 
-    # iterate over num_iterations
-    for i in range(num_iterations):
-        # iterate over L-layers to get the final output and the cache
-        AL, caches = L_model_forward(
-            X, parameters, hidden_layers_activation_fn)
+        # iterate over num_iterations
+        for i in range(num_iterations):
+            # iterate over L-layers to get the final output and the cache
+            AL, caches = L_model_forward(
+                X, parameters, hidden_layers_activation_fn)
 
-        # compute cost to plot it
-        cost = compute_cost(AL, y)
+            # compute cost to plot it
+            cost = compute_cost(AL, y)
 
-        # iterate over L-layers backward to get gradients
-        grads = L_model_backward(AL, y, caches, hidden_layers_activation_fn)
+            # iterate over L-layers backward to get gradients
+            grads = L_model_backward(AL, y, caches, hidden_layers_activation_fn)
 
-        # update parameters
-        parameters = update_parameters(parameters, grads, learning_rate)
+            # update parameters
+            parameters = update_parameters(parameters, grads, learning_rate)
 
-        # append each 100th cost to the cost list
-        if (i + 1) % 100 == 0 and print_cost:
-            print(f"The cost after {i + 1} iterations is: {cost:.4f}")
+            # append each 100th cost to the cost list
+            if (i + 1) % 100 == 0 and print_cost:
+                print(f"The cost after {i + 1} iterations is: {cost:.4f}")
 
-        if i % 100 == 0:
-            cost_list.append(cost)
+            if i % 100 == 0:
+                cost_list.append(cost)
 
-    # plot the cost curve
-    plt.figure(figsize=(10, 6))
-    plt.plot(cost_list)
-    plt.xlabel("Iterations (per hundreds)")
-    plt.ylabel("Loss")
-    plt.title(f"Loss curve for the learning rate = {learning_rate}")
+        # plot the cost curve
+        plt.figure(figsize=(10, 6))
+        plt.plot(cost_list)
+        plt.xlabel("Iterations (per hundreds)")
+        plt.ylabel("Loss")
+        plt.title(f"Loss curve for the learning rate = {learning_rate}")
 
-    return parameters
+        return parameters
 
 
     def accuracy(X, parameters, y, activation_fn="relu"):
+            """
+        Computes the average accuracy rate.
+
+        Arguments
+        ---------
+        X : 2d-array
+            data, shape: number of examples x num_px * num_px * 3.
+        parameters : dict
+            learnt parameters.
+        y : 2d-array
+            true "label" vector, shape: 1 x number of examples.
+        activation_fn : str
+            activation function to be used on hidden layers: "tanh", "relu".
+
+        Returns
+        -------
+        accuracy : float
+            accuracy rate after applying parameters on the input data
         """
-    Computes the average accuracy rate.
+            probs, caches = L_model_forward(X, parameters, activation_fn)
+            labels = (probs >= 0.5) * 1
+            accuracy = np.mean(labels == y) * 100
 
-    Arguments
-    ---------
-    X : 2d-array
-        data, shape: number of examples x num_px * num_px * 3.
-    parameters : dict
-        learnt parameters.
-    y : 2d-array
-        true "label" vector, shape: 1 x number of examples.
-    activation_fn : str
-        activation function to be used on hidden layers: "tanh", "relu".
-
-    Returns
-    -------
-    accuracy : float
-        accuracy rate after applying parameters on the input data
-    """
-    probs, caches = L_model_forward(X, parameters, activation_fn)
-    labels = (probs >= 0.5) * 1
-    accuracy = np.mean(labels == y) * 100
-
-    return f"The accuracy rate is: {accuracy:.2f}%."
+            return f"The accuracy rate is: {accuracy:.2f}%."
