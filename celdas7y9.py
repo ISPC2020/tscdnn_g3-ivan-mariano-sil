@@ -1,21 +1,7 @@
 class Celdas79:
 # Define derivative of activation functions w.r.t z that will be used in back-propagation
     def sigmoid_gradient(dA, Z):
-        """
-        Computes the gradient of sigmoid output w.r.t input Z.
-
-        Arguments
-        ---------
-        dA : 2d-array
-            post-activation gradient, of any shape.
-        Z : 2d-array
-            input used for the activation fn on this layer.
-
-        Returns
-        -------
-        dZ : 2d-array
-            gradient of the cost with respect to Z.
-        """
+        
         A, Z = sigmoid(Z)
         dZ = dA * A * (1 - A)
 
@@ -23,21 +9,7 @@ class Celdas79:
 
 
     def tanh_gradient(dA, Z):
-        """
-        Computes the gradient of hyperbolic tangent output w.r.t input Z.
-
-        Arguments
-        ---------
-        dA : 2d-array
-            post-activation gradient, of any shape.
-        Z : 2d-array
-            input used for the activation fn on this layer.
-
-        Returns
-        -------
-        dZ : 2d-array
-            gradient of the cost with respect to Z.
-        """
+        
         A, Z = tanh(Z)
         dZ = dA * (1 - np.square(A))
 
@@ -45,21 +17,7 @@ class Celdas79:
 
 
     def relu_gradient(dA, Z):
-        """
-        Computes the gradient of ReLU output w.r.t input Z.
-
-       Arguments
-       ---------
-        dA : 2d-array
-          post-activation gradient, of any shape.
-       Z : 2d-array
-            input used for the activation fn on this layer.
-
-        Returns
-        -------
-        dZ : 2d-array
-            gradient of the cost with respect to Z.
-       """
+        
         A, Z = relu(Z)
         dZ = np.multiply(dA, np.int64(A > 0))
  
@@ -68,26 +26,7 @@ class Celdas79:
 
     # define helper functions that will be used in L-model back-prop
     def linear_backword(dZ, cache):
-       """
-       Computes the gradient of the output w.r.t weight, bias, and post-activation
-       output of (l - 1) layers at layer l.
-
-       Arguments
-      ---------
-      dZ : 2d-array
-          gradient of the cost w.r.t. the linear output (of current layer l).
-       cache : tuple
-           values of (A_prev, W, b) coming from the forward propagation in the current layer.
-
-      Returns
-       -------
-       dA_prev : 2d-array
-           gradient of the cost w.r.t. the activation (of the previous layer l-1).
-       dW : 2d-array
-           gradient of the cost w.r.t. W (current layer l).
-       db : 2d-array
-           gradient of the cost w.r.t. b (current layer l).
-       """
+       
        A_prev, W, b = cache
        m = A_prev.shape[1]
 
@@ -103,25 +42,7 @@ class Celdas79:
 
 
     def linear_activation_backward(dA, cache, activation_fn):
-        """
-        Arguments
-        ---------
-        dA : 2d-array
-           post-activation gradient for current layer l.
-        cache : tuple
-            values of (linear_cache, activation_cache).
-        activation : str
-            activation used in this layer: "sigmoid", "tanh", or "relu".
-
-        Returns
-        -------
-        dA_prev : 2d-array
-            gradient of the cost w.r.t. the activation (of the previous layer l-1), same shape as A_prev.
-        dW : 2d-array
-            gradient of the cost w.r.t. W (current layer l), same shape as W.
-        db : 2d-array
-            gradient of the cost w.r.t. b (current layer l), same shape as b.
-        """
+       
         linear_cache, activation_cache = cache
 
         if activation_fn == "sigmoid":
@@ -140,26 +61,7 @@ class Celdas79:
 
 
     def L_model_backward(AL, y, caches, hidden_layers_activation_fn="relu"):
-            """
-        Computes the gradient of output layer w.r.t weights, biases, etc. starting
-        on the output layer in reverse topological order.
-
-        Arguments
-        ---------
-        AL : 2d-array
-            probability vector, output of the forward propagation (L_model_forward()).
-        y : 2d-array
-            true "label" vector (containing 0 if non-cat, 1 if cat).
-        caches : list
-            list of caches for all layers.
-        hidden_layers_activation_fn :
-            activation function used on hidden layers: "tanh", "relu".
-
-        Returns
-        -------
-        grads : dict
-            with the gradients.
-        """
+       
             y = y.reshape(AL.shape)
             L = len(caches)
             grads = {}
@@ -182,21 +84,7 @@ class Celdas79:
 
     # define the function to update both weight matrices and bias vectors
     def update_parameters(parameters, grads, learning_rate):
-        """
-        Update the parameters' values using gradient descent rule.
-
-        Arguments
-        ---------
-        parameters : dict
-            contains all the weight matrices and bias vectors for all layers.
-        grads : dict
-            stores all gradients (output of L_model_backward).
-
-        Returns
-        -------
-        parameters : dict
-            updated parameters.
-        """
+       
         L = len(parameters) // 2
 
         for l in range(1, L + 1):
@@ -211,32 +99,7 @@ class Celdas79:
             X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
             print_cost=True, hidden_layers_activation_fn="relu"):
     
-        """
-        Implements multilayer neural network using gradient descent as the
-        learning algorithm.
-
-        Arguments
-        ---------
-        X : 2d-array
-            data, shape: number of examples x num_px * num_px * 3.
-        y : 2d-array
-            true "label" vector, shape: 1 x number of examples.
-        layers_dims : list
-            input size and size of each layer, length: number of layers + 1.
-        learning_rate : float
-            learning rate of the gradient descent update rule.
-        num_iterations : int
-            number of iterations of the optimization loop.
-        print_cost : bool
-            if True, it prints the cost every 100 steps.
-        hidden_layers_activation_fn : str
-            activation function to be used on hidden layers: "tanh", "relu".
-
-        Returns
-        -------
-        parameters : dict
-            parameters learnt by the model. They can then be used to predict test examples.
-        """
+        
         np.random.seed(1)
 
         # initialize parameters
@@ -278,25 +141,7 @@ class Celdas79:
 
 
     def accuracy(X, parameters, y, activation_fn="relu"):
-            """
-        Computes the average accuracy rate.
-
-        Arguments
-        ---------
-        X : 2d-array
-            data, shape: number of examples x num_px * num_px * 3.
-        parameters : dict
-            learnt parameters.
-        y : 2d-array
-            true "label" vector, shape: 1 x number of examples.
-        activation_fn : str
-            activation function to be used on hidden layers: "tanh", "relu".
-
-        Returns
-        -------
-        accuracy : float
-            accuracy rate after applying parameters on the input data
-        """
+        
             probs, caches = L_model_forward(X, parameters, activation_fn)
             labels = (probs >= 0.5) * 1
             accuracy = np.mean(labels == y) * 100

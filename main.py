@@ -28,7 +28,7 @@ Test: {X_test.shape}, {y_test.shape}""")
 # plot cat image
 plt.figure(figsize=(6, 6))
 plt.imshow(X_train[50])
-plt.axis("off");
+plt.axis("off")
 
 # Transform input data and label vector
 X_train = X_train.reshape(209, -1).T
