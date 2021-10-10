@@ -62,24 +62,24 @@ class Celdas79:
 
     def L_model_backward(AL, y, caches, hidden_layers_activation_fn="relu"):
        
-            y = y.reshape(AL.shape)
-            L = len(caches)
-            grads = {}
+        y = y.reshape(AL.shape)
+        L = len(caches)
+        grads = {}
 
-            dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
+        dAL = np.divide(AL - y, np.multiply(AL, 1 - AL))
 
-            grads["dA" + str(L - 1)], grads["dW" + str(L)], grads[
-                "db" + str(L)] = linear_activation_backward(
-                    dAL, caches[L - 1], "sigmoid")
+        grads["dA" + str(L - 1)], grads["dW" + str(L)], grads[
+            "db" + str(L)] = linear_activation_backward(
+                dAL, caches[L - 1], "sigmoid")
 
-            for l in range(L - 1, 0, -1):
-                current_cache = caches[l - 1]
-                grads["dA" + str(l - 1)], grads["dW" + str(l)], grads[
-                    "db" + str(l)] = linear_activation_backward(
-                        grads["dA" + str(l)], current_cache,
-                        hidden_layers_activation_fn)
+        for l in range(L - 1, 0, -1):
+            current_cache = caches[l - 1]
+            grads["dA" + str(l - 1)], grads["dW" + str(l)], grads[
+                "db" + str(l)] = linear_activation_backward(
+                    grads["dA" + str(l)], current_cache,
+                    hidden_layers_activation_fn)
 
-            return grads
+        return grads
 
 
     # define the function to update both weight matrices and bias vectors
@@ -95,11 +95,9 @@ class Celdas79:
 
         return parameters
 
-    def L_layer_model(
-            X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
+    def L_layer_model(X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
             print_cost=True, hidden_layers_activation_fn="relu"):
     
-        
         np.random.seed(1)
 
         # initialize parameters
@@ -142,8 +140,8 @@ class Celdas79:
 
     def accuracy(X, parameters, y, activation_fn="relu"):
         
-            probs, caches = L_model_forward(X, parameters, activation_fn)
-            labels = (probs >= 0.5) * 1
-            accuracy = np.mean(labels == y) * 100
+        probs, caches = L_model_forward(X, parameters, activation_fn)
+        labels = (probs >= 0.5) * 1
+        accuracy = np.mean(labels == y) * 100
 
-            return f"The accuracy rate is: {accuracy:.2f}%."
+        return f"The accuracy rate is: {accuracy:.2f}%."
