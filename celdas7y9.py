@@ -208,8 +208,8 @@ class Celdas79:
         return parameters
 
     def L_layer_model(
-        X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
-        print_cost=True, hidden_layers_activation_fn="relu"):
+            X, y, layers_dims, learning_rate=0.01, num_iterations=3000,
+            print_cost=True, hidden_layers_activation_fn="relu"):
     
         """
         Implements multilayer neural network using gradient descent as the

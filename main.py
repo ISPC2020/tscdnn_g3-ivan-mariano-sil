@@ -4,9 +4,9 @@ import h5py
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-import Celdas_1,2&3 as c123
+import celdas1_2y3 as c123
 import celdas7y9 as c79
-import celdas5y6 as c4y5
+import celdas5y6 as c56
 
 #This is a sample Python script.
 
@@ -48,12 +48,20 @@ Test: {X_test.shape}, {y_test.shape}""")
 layers_dims = [X_train.shape[0], 5, 5, 1]
 
 # NN with tanh activation fn
-parameters_tanh = c79.L_layer_model(
+parameters_tanh = L_layer_model(
     X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
     hidden_layers_activation_fn="tanh")
 
-    # Print the accuracy
+# Print the accuracy
 accuracy(X_test, parameters_tanh, y_test, activation_fn="tanh")
+
+# NN with relu activation fn
+parameters_relu = L_layer_model(
+    X_train, y_train, layers_dims, learning_rate=0.03, num_iterations=3000,
+    hidden_layers_activation_fn="relu")
+
+# Print the accuracy
+accuracy(X_test, parameters_relu, y_test, activation_fn="relu")
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.

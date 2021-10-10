@@ -1,19 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-# Celda 1
-# Import packages
-
-get_ipython().run_line_magic('matplotlib', 'inline')
-sns.set_context("notebook")
-plt.style.use("fivethirtyeight")
-
-# Celda 2
-
-class Metodos initparam_actfunt:
+class Metodos:
 
     # Initialize parameters    
     
